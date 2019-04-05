@@ -2,7 +2,7 @@
 function backup {
 	user=$(whoami)
 	if [ -z $1 ];then
-		input=/home/$user/Downloads	 #if no args then make user as whoami
+		input=$(pwd) #if no args then make user as whoami
 	else
 		if [ ! -d "$1" ];then # -d returns true if dir exist so use negation 
 			echo "Requested dir $1 doesn't exist"   
@@ -23,7 +23,7 @@ function backup {
 
 	# output=/home/$user/${user}_Downloads_$(date +%Y-%m-%d).tar.gz
 	output_name=$(echo $input | tr '/' '-')
-	output=/home/$user/${output_name}_$(date +%Y-%m-%d).tar.gz
+	output=/home/hari/Dev/bash/${output_name}_$(date +%Y-%m-%d).tar.gz
 
 
 	function total_files {
@@ -62,6 +62,17 @@ function backup {
 		echo "Backup of input failed"	
 	fi	
 }
+if [ -z $1 ];then
+	backup $(pwd)		
+fi
+
+for dir in $*;do 
+	if [ ! -d $dir ];then
+		echo "$dir Doesn't exist"
+		echo "Program stopping..bye"	
+		exit 1
+	fi	
+done
 
 for dir in $*;do
 	backup $dir
