@@ -61,6 +61,9 @@ function backup {
 	else
 		echo "Backup of input failed"	
 	fi	
+
+	
+
 }
 if [ -z $1 ];then
 	backup $(pwd)		
@@ -76,4 +79,6 @@ done
 
 for dir in $*;do
 	backup $dir
+	let all+=(arch_files+arch_dirs)
 done;	
+echo "Total Files archieved : $all"
